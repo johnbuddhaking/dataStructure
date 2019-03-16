@@ -10,9 +10,9 @@ using namespace std;
 
 #include "c1.h"
 typedef int ElemType;
-#include "c2-1.h"
-#include "bo2-1.h"
-#include "func2-2.h"
+#include "c2_1.h"
+#include "bo2_1.h"
+#include "func2_2.h"
 
 Status sq(ElemType c1, ElemType c2){
     if(c1 == c2 * c2){

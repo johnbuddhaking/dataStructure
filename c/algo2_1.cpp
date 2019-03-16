@@ -9,9 +9,9 @@
 using namespace std;
 #include "c1.h"
 typedef int ElemType;
-#include "c2-1.h"
-#include "bo2-1.h"
-#include "func2-2.h"
+#include "c2_1.h"
+#include "bo2_1.h"
+#include "func2_2.h"
 
 
 void MergeList(SqList La, SqList Lb, SqList &Lc){
