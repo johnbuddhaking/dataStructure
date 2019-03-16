@@ -5,4 +5,4 @@ struct SqList{
     ElemType *elem;
     int length;
     int listsize;
-}
+};
