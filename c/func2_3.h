@@ -39,7 +39,7 @@ int main(){
 
     for(int index = 0; index <= 1; ++index){
 #ifdef SLL
-        int k = LocateElem(L, j);
+        int k = LocateElem(L, index);
         if(k){
             printf("值为%d的元素的位序为%d\n", index, k);
         }
@@ -85,6 +85,7 @@ int main(){
     }
 
     int k = ListLength(L);
+
     for(int index = k + 1; index >= k; --index){
         status = ListDelete(L, index, e);
 
@@ -102,7 +103,7 @@ int main(){
     DestroyList(L);
 
 #ifdef SLL
-    prinf("销毁L后，L = %p\n", L);
+    printf("销毁L后，L = %p\n", L);
 #endif
 
 }
