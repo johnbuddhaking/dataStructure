@@ -1,4 +1,4 @@
-/*************************************************************************
+﻿/*************************************************************************
 	> File Name: test.cpp
 	> Author: 
 	> Mail: 
@@ -7,8 +7,8 @@
 #include<iostream>
 #include "c1.h"
 typedef double ElementType;
-#include "c1-1.h"
-#include "bo1-1.h"
+#include "c1_1.h"
+#include "bo1_1.h"
 using namespace std;
 
 
