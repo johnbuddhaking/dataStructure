@@ -61,20 +61,20 @@ int ListLength(DuLinkList L){
 Status GetElem(DuLinkList L, int i, ElemType &e){
     int count = 0;
 
-    DuLinkList p = L;
+    DuLinkList p = L->next;
 
-    while(p->next != L){
+    while(p != L){
         ++count;
-        p = p->next;
 
         if(count == i){
             e = p->data;
             return OK;
         }
+
+        p = p->next;
     }
     
     return ERROR;
-
 }
 
 int LocateElem(DuLinkList L, ElemType e, Status(*compare)(ElemType, ElemType)){
@@ -96,11 +96,11 @@ int LocateElem(DuLinkList L, ElemType e, Status(*compare)(ElemType, ElemType)){
 }
 
 Status PriorElem(DuLinkList L, ElemType cur_e, ElemType &pre_e){
-    DuLinkList p = L->next->next;
+    DuLinkList p = L->next;
 
-    while(p != L){
-        if(p->data == cur_e){
-            pre_e = p->prior->data;
+    while(p != L && p->next != L){
+        if(p->next->data == cur_e){
+            pre_e = p->data;
             return OK;
         }
         p = p->next;
@@ -109,27 +109,28 @@ Status PriorElem(DuLinkList L, ElemType cur_e, ElemType &pre_e){
 }
 
 Status NextElem(DuLinkList L, ElemType cur_e, ElemType &next_e){
-    DuLinkList p = L->next->next;
+    DuLinkList p = L->next;
 
-    while(p != L){
-        if(p->prior->data == cur_e){
-            next_e = p->data;
+    while(p != L && p->next != L){
+        if(p->data == cur_e){
+            next_e = p->next->data;
             return OK;
         }
+
         p = p->next;
     }
     return ERROR;
 }
 
 DuLinkList GetElemP(DuLinkList L, int i){
-    int j;
-    DuLinkList p = L;
 
     if(i < 0 || i > ListLength(L)){
         return NULL;
     }
 
-    for(j = 1; j <= i; ++j){
+    DuLinkList p = L;
+
+    for(int j = 1; j <= i; ++j){
         p = p->next;
     }
 
@@ -138,15 +139,15 @@ DuLinkList GetElemP(DuLinkList L, int i){
 
 Status ListInsert(DuLinkList L, int i, ElemType e){
     
-    int count = 0;
+    int count = 1;
     DuLinkList p = L;
 
-    while(p->next != L && count < i - 1){
+    while(p->next != L && count < i){
         p = p->next;
         ++count;
     }
 
-    if(count != i - 1){
+    if(count != i){
         return ERROR;
     }
 
@@ -158,22 +159,21 @@ Status ListInsert(DuLinkList L, int i, ElemType e){
 
     p->next = q;
     q->next->prior = q;
+    
     return OK;
-
-
 }
 
 
 Status ListDelete(DuLinkList L, int i, ElemType &e){
-    int count = 0;
+    int count = 1;
     DuLinkList p = L;
 
-    while(p->next != L && count < i - 1){
+    while(p->next != L && count < i){
         p = p->next;
         ++count;
     }
 
-    if(count != i - 1){
+    if(count != i){
         return ERROR;
     }
 
