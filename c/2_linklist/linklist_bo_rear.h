@@ -1,12 +1,12 @@
 /*************************************************************************
-	> File Name: bo2_6.h
+	> File Name: linklist_bo_rear.h
 	> Author: 
 	> Mail: 
 	> Created Time: 2019年03月18日 星期一 07时41分57秒
  ************************************************************************/
 
-#ifndef _BO2_6_H
-#define _BO2_6_H
+#ifndef _LINKLIST_BO_REAR_H
+#define _LINKLIST_BO_REAR_H
 
 void InitList(LinkList &L){
     L = (LNode*)malloc(sizeof(LNode));
@@ -16,21 +16,18 @@ void InitList(LinkList &L){
     }
 
     L->next = L;
-
 }
 
 void ClearList(LinkList &L){
-    L = L->next;
-    LinkList p = L;
+    LinkList p = L->next;
 
-    while(p->next != L){
-        LinkList q = p->next;
-        p->next = q->next;
+    while(p != L){
+        LinkList q = p;
+        p = p->next;
         free(q);
     }
 
     L->next = L;
-
 }
 
 void DestroyList(LinkList &L){
@@ -53,9 +50,9 @@ int ListLength(LinkList L){
 
     LNode* p = L->next;
 
-    while(p->next != L->next){
-        p = p->next;
+    while(p != L){
         ++count;
+        p = p->next;
     }
 
     return count;
@@ -66,11 +63,11 @@ Status GetElem(LinkList L, int i, ElemType &e){
 
     LNode* p = L->next;
 
-    while(p->next != L->next){
+    while(p != L){
         ++count;
 
         if(count == i){
-            e = p->next->data;
+            e = p->data;
             return OK;
         }
 
@@ -85,48 +82,44 @@ int LocateElem(LinkList L, ElemType e, Status(*compare)(ElemType, ElemType)){
 
     LNode* p = L->next;
 
-    while(p->next != L->next){
+    while(p != L){
         ++count;
-
-        p = p->next;
 
         if(p->data == e){
             return count;
         }
+
+        p = p->next;
     }
 
     return 0;
 }
 
 Status PriorElem(LinkList L, ElemType cur_e, ElemType &pre_e){
-    LNode* p = L->next->next;
-    LNode* q = p->next;
+    LNode* p = L->next;
 
-    while(q != L->next){
-        if(q->data == cur_e){
+    while(p != L && p->next != L){
+        if(p->next->data == cur_e){
             pre_e = p->data;
             return OK;
         }
 
-        p = q;
-        q = p->next;
+        p = p->next;
     }
 
     return ERROR;
 }
 
 Status NextElem(LinkList L, ElemType cur_e, ElemType &next_e){
-    LNode* p = L->next->next;
-    LNode* q = p->next;
+    LNode* p = L->next;
 
-    while(q != L->next){
+    while(p != L && p->next != L){
         if(p->data == cur_e){
-            next_e = q->data;
+            next_e = p->next->data;
             return OK;
         }
 
-        p = q;
-        q = p->next;
+        p = p->next;
     }
 
    return ERROR; 
@@ -134,15 +127,15 @@ Status NextElem(LinkList L, ElemType cur_e, ElemType &next_e){
 
 Status ListInsert(LinkList &L, int i, ElemType e){
 
-    if(i <= 0 || i > ListLength(L) + 1){
+    if(i < 1 || i > ListLength(L) + 1){
         return ERROR;
     }
 
-    LinkList p = L->next;
-    int j = 0;
+    LinkList p = L;
+    int idx = 1;
 
-    while(j < i - 1){
-        j++;
+    while(idx < i){
+        ++idx;
         p = p->next;
     }
 
@@ -151,34 +144,26 @@ Status ListInsert(LinkList &L, int i, ElemType e){
     s->next = p->next;
     p->next = s;
 
-    if(p == L){
-        L = s;
-    }
-
     return OK;
 }
 
 Status ListDelete(LinkList &L, int i, ElemType &e){
-    if(i <= 0 || i > ListLength(L) ){
+    if(i < 1 || i > ListLength(L) ){
         return ERROR;
     }
 
-    LinkList p = L->next;
-    int j = 0;
+    LinkList p = L;
+    int idx = 1;
 
-    while(j < i - 1){
-        j++;
+    while(idx < i){
+        idx++;
         p = p->next;
     }
 
     LNode* q = p->next;
-    e = q->data;
     p->next = q->next;
-
-    if(L == q){
-        L = p;
-    }
-
+    
+    e = q->data;
     free(q);
 
     return OK;
@@ -188,8 +173,8 @@ void ListTraverse(LinkList L, void(*vi)(ElemType)){
     LNode* p = L->next;
 
 
-    while(p->next != L->next){
-        vi(p->next->data);
+    while(p != L){
+        vi(p->data);
         p = p->next;
     }
     printf("\n");

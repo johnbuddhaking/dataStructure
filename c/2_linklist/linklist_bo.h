@@ -59,12 +59,12 @@ Status GetElem(LinkList L, int i, ElemType &e){
     
     while(p->next){
         ++count;
-        p = p->next;
 
         if(count == i){
             e = p->data;
             return OK;
         }
+        p = p->next;
     }
 
     return ERROR;
@@ -88,18 +88,16 @@ int LocateElem(LinkList L, ElemType e, Status(* compare)(ElemType, ElemType)){
 }
 
 Status PriorElem(LinkList L, ElemType cur_e, ElemType &pre_e){
-    LNode* p1 = L->next;
-    LNode* p2;
+    LNode* p = L->next;
 
-    while(p1 && p1->next){
-        p2 = p1->next;
+    while(p && p->next){
 
-        if(p2->data == cur_e){
-            pre_e = p1->data;
+        if(p->next->data == cur_e){
+            pre_e = p->data;
             return OK;
         }
 
-        p1 = p2;
+        p = p->next;
     }
 
     return ERROR;
@@ -129,11 +127,11 @@ Status ListInsert(LinkList L, int i, ElemType e){
         ++count;
         
         if(count == i){
-            auxp = p->next;
+            auxp = (LNode *)malloc(sizeof(LNode));
+	        auxp->data = e;
+	        auxp->next = p->next;
+	        p->next = auxp;
 
-            p->next = (LNode*)malloc(sizeof(LNode));
-            p->next->data = e;
-            p->next->next = auxp;
             return OK;
         }
 

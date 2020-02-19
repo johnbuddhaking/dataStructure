@@ -1,12 +1,12 @@
 /*************************************************************************
-	> File Name: bo2_3.h
+	> File Name: linklist_bo_nohead.h
 	> Author: 
 	> Mail: 
 	> Created Time: 2019年03月17日 星期日 16时05分50秒
  ************************************************************************/
 
-#ifndef _BO2_3_H
-#define _BO2_3_H
+#ifndef _LINKLIST_BO_NOHEAD_H
+#define _LINKLIST_BO_NOHEAD_H
 
 #define DestroyList ClearList
 
@@ -62,8 +62,6 @@ Status GetElem(LinkList L, int i, ElemType &e){
     }
 
     return ERROR;
-
-
 }
 
 int LocateElem(LinkList L, ElemType e, Status(* compare)(ElemType, ElemType)){
@@ -159,7 +157,7 @@ Status PriorElem(LinkList L, ElemType cur_e, ElemType &pre_e){
 
     LNode* p = L;
 
-    while(p->next){
+    while(p && p->next){
         if(p->next->data == cur_e){
             pre_e = p->data;
             return OK;
@@ -176,9 +174,9 @@ Status NextElem(LinkList L, ElemType cur_e, ElemType &next_e){
 
     LNode* p = L;
 
-    while(p){
+    while(p && p->next){
         
-        if(p->data == cur_e && p->next){
+        if(p->data == cur_e){
             next_e = p->next->data;
             return OK;
         }
