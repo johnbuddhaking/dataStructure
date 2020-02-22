@@ -47,7 +47,7 @@ int StackLength(SqStack S){
 
 Status GetTop(SqStack S, SElemType &e){
 
-    if(S.top >= S.base){
+    if(S.top > S.base){
         e = *(S.top - 1);
         return OK;
     }
