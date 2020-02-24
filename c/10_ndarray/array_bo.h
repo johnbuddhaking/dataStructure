@@ -75,7 +75,7 @@ Status Locate(Array A, va_list ap, int &off) {
     return OK;
 }
 
-Status Value(ElemType &e, Array A, ...) {
+Status Value(ElemType &e, Array A, ...) { // 在 vc++ 中， "..." 之前的形参不能是引用类型
     int off = 0;
     
     va_list ap;
