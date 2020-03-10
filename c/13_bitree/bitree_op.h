@@ -310,11 +310,17 @@ void InOrderTraverse1(BiTree T, void (* visit)(TElemType)) {
     InitStack(s);
 
     while (T || !StackEmpty(s)) {
+
         if (T) {
+            // 如果T非空，入栈；
+            // 将T移动到左孩子
             Push(s, T);
             T = T->lchild;
         }
         else {
+            // 如果T为空，则说明左孩子已经访问了；
+            // 出栈一个中间节点，访问之；
+            // 将T移动到右孩子。
             Pos(s, T);
             visit(T->data);
             T = T->rchild;
