@@ -96,7 +96,7 @@ BiTree Point(BiTree T, TElemType s) {
             }
 
             if (a->rchild) {
-                EnQueue();
+                EnQueue(q, a->rchild);
             }
         }
 
@@ -167,7 +167,7 @@ void LevelOrderTraverse(BiTree T, void (* visit)(TElemType)) {
                 EnQueue(q, a->lchild);
             }
             if (a->rchild) {
-                EnQueue(q, b->lchild);
+                EnQueue(q, a->lchild);
             }
         }
         printf("/n");
@@ -245,7 +245,7 @@ TElemType LeftSibling(BiTree T, TElemType e) {
             }
 
             if (a->rchild) {
-                EnQueue(q, b->rchild);
+                EnQueue(q, a->rchild);
             }
         }
     }
@@ -274,13 +274,13 @@ TElemType RightSibling(BiTree T, TElemType e) {
                 EnQueue(q, a->lchild);
             }
 
-            if (b->rchild) {
+            if (a->rchild) {
                 EnQueue(q, a->rchild);
             }
         }
     }
 
-    return Nil
+    return Nil;
 }
 
 Status InsertChild(BiTree p, int LR, BiTree c){
@@ -321,12 +321,36 @@ void InOrderTraverse1(BiTree T, void (* visit)(TElemType)) {
             // 如果T为空，则说明左孩子已经访问了；
             // 出栈一个中间节点，访问之；
             // 将T移动到右孩子。
-            Pos(s, T);
+            Pop(s, T);
             visit(T->data);
             T = T->rchild;
         }
     }
 
+    printf("\n");
+    DestroyStack(s);
+}
+
+void InOrderTraverse2(BiTree T, void (* visit)(TElemType)) {
+    SqStack s;
+    InitStack(s);
+    BiTree p;
+
+    Push(s, T);
+
+    while (!StackEmpty(s)) { // 栈不空
+        while (GetTop(s, p) && p)  {// 栈顶元素不为空指针
+            Push(s, p->lchild); // 向左走到尽头，入栈左孩子指针
+            p = p->lchild;
+        }
+
+        Pop(s, p); //空指针退栈
+        if (!StackEmpty(s)) { // 访问栈顶元素并压栈右孩子
+            Pop(s, p);
+            visit(p->data);
+            Push(s, p->rchild);
+        }
+    }
     printf("\n");
     DestroyStack(s);
 }

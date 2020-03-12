@@ -20,7 +20,7 @@ void InitStack(SqStack &S)
     S.stacksize = STACK_INIT_SIZE;
 }
 
-void DestoryStack(SqStack &S){
+void DestroyStack(SqStack &S){
 
     free(S.base);
     S.base = S.top = NULL;
