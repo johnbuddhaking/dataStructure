@@ -16,7 +16,7 @@ void visit(TElemType e) {
 }
 
 #include "bitree.h"
-#include "bitree_op.h"
+#include "bitree_bo.h"
 
 int main() {
     BiTree T;
