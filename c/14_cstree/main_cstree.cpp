@@ -18,6 +18,7 @@ void visit(TElemType e) {
 #include "cstree.h"
 #include "cstree_bo.h"
 
+
 int main() {
     CSTree T;
     InitTree(T);
@@ -46,8 +47,9 @@ int main() {
     InitTree(p);
     CreateTree(p);
     printf("层序遍历树p：\n");
-    LevelOrderTraverse(T, visit);
+    LevelOrderTraverse(p, visit);
 
+    int i;
     printf("\n树p插到树T中，请输入树T中树p的双亲结点 子树序号：");
     scanf("%c%d%*c", &e, &i);
     CSTree q = Point(T, e);

@@ -1,4 +1,4 @@
-#define ClearTree DestroyTree
+#define ClearTree DestroyTreecd .
 
 void InitTree(CSTree &T) {
     T = NULL;
@@ -17,6 +17,7 @@ typedef CSTree QElemType;
 
 #include "../06_linkqueue/linkqueue.h"
 #include "../06_linkqueue/linkqueue_bo.h"
+#include <iostream>
 
 void CreateTree(CSTree &T) {
     char c[20]; // 临时存放孩子结点
@@ -29,7 +30,7 @@ void CreateTree(CSTree &T) {
     scanf("%c%*c", &c[0]);
 
     if (c[0] != Nil) {
-        T = (CSTree)malloc(sizof(CSNode));
+        T = (CSTree)malloc(sizeof(CSNode));
         T->data = c[0];
         T->nextsibling = NULL;
 
@@ -39,8 +40,8 @@ void CreateTree(CSTree &T) {
         while (!QueueEmpty(q)) {
             DeQueue(q, p);
             printf("请按长幼顺序输入结点%c的所有孩子：", p->data);
-            gets(c);
-            m = strlen(c);
+            std::cin.getline(c, 20);
+            int m = strlen(c);
 
             // 如果有孩子，继续添加
             if (m > 0) {
@@ -61,9 +62,9 @@ void CreateTree(CSTree &T) {
                 p->firstchild = NULL;
             }
         }
-        else {
-            T = NULL;
-        }
+    }
+    else {
+        T = NULL;
     }
 }
 
@@ -167,7 +168,7 @@ TElemType Parent(CSTree T, TElemType cur_e) {
             DeQueue(q, p);
 
             if (p->firstchild) {
-                t = p->firstchild;
+                CSTree t = p->firstchild;
 
                 while (t) {
                     EnQueue(q, t);
@@ -303,7 +304,7 @@ void LevelOrderTraverse(CSTree T, void(*visit)(TElemType)) {
                     EnQueue(q, p->firstchild);
                 }
 
-                p = p->nextsibling
+                p = p->nextsibling;
             }
         }
     }
