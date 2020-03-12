@@ -70,6 +70,12 @@ TElemType Value(BiTree p) {
     return p->data;
 }
 
+void Assign(BiTree p, TElemType e) {
+    if (p) {
+        p->data = e;
+    }
+}
+
 typedef BiTree QElemType;
 #include "../06_linkqueue/linkqueue.h"
 #include "../06_linkqueue/linkqueue_bo.h"
@@ -167,10 +173,10 @@ void LevelOrderTraverse(BiTree T, void (* visit)(TElemType)) {
                 EnQueue(q, a->lchild);
             }
             if (a->rchild) {
-                EnQueue(q, a->lchild);
+                EnQueue(q, a->rchild);
             }
         }
-        printf("/n");
+        printf("\n");
         DestroyQueue(q);
     }
 }
