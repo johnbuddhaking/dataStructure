@@ -141,7 +141,7 @@ void CreateUDG(MGraph &G) {
         }
     }
 
-    // 输入弧信息
+    // 输入边信息
     VertexType v1;
     VertexType v2;
     printf("请输入%d条边的顶点1 顶点2：\n", G.arcnum);
@@ -179,7 +179,7 @@ void CreateUDN(MGraph &G) {
             }
         }
 
-        // 输入弧信息
+        // 输入边信息
         VertexType v1;
         VertexType v2;
         VRType w;
