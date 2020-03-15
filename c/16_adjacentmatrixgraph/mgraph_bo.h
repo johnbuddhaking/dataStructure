@@ -1,3 +1,4 @@
+#include <iostream>
 
 // 访问顶点
 void Visit(VertexType ver) {
@@ -18,7 +19,7 @@ void InputFromFile(FILE *f, VertexType &ver) {
 void InputArc(InfoType * &arc) {
     char s[MAX_INFO];
     printf("请输入该弧的相关信息(<%d个字符)：", MAX_INFO);
-    gets(s);
+    std::cin.getline(s, MAX_INFO);
     int m = strlen(s);
     if (m) {
         arc = (char *)malloc((m + 1) * sizeof(char));
@@ -444,14 +445,18 @@ void Display(MGraph G) {
     for (int i = 0; i < G.vexnum; ++i) {
         if (G.kind < 2) {  // 有向
             for (int j = 0; j < G.vexnum; ++j) {
-                printf("%5s%5s", G.vexs[i].name, G.vexs[j].name);
-                OutputArc(G.arcs[i][j].info);
+                if (G.arcs[i][j].info){
+                    printf("%5s%5s\t", G.vexs[i].name, G.vexs[j].name);
+                    OutputArc(G.arcs[i][j].info);
+                }
             }
         }
         else {  // 无向
             for (int j = i + 1; j < G.vexnum; ++j) {
-                printf("%5s%5s", G.vexs[i].name, G.vexs[j].name);
-                OutputArc(G.arcs[i][j].info);
+                if (G.arcs[i][j].info){
+                    printf("%5s%5s\t", G.vexs[i].name, G.vexs[j].name);
+                    OutputArc(G.arcs[i][j].info);
+                }
             }
         }
     }
