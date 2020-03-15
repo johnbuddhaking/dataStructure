@@ -11,19 +11,6 @@ int main() {
     printf("请依次选择有向图，有向网，无向图，无向网：\n");
 
     for (int i = 0; i < 4; ++i) {
-        switch (i) {
-            case 0:
-                g.kind =  DG;
-                break;
-            case 1:
-                g.kind = DN;
-                break;
-            case 2:
-                g.kind = UDG;
-                break;
-            case 3:
-                g.kind = UDN;
-        }
         CreateGraph(g);
         Display(g);
         printf("插入新顶点，请输入新顶点的值：");
@@ -34,7 +21,7 @@ int main() {
             strcpy(s, "弧");
         }
 
-        printf("插入与新顶点有关的%s，请输入%s数");
+        printf("插入与新顶点有关的%s，请输入%s数", s, s);
         int n = 0;
         scanf("%d", &n);
 
@@ -80,6 +67,7 @@ int main() {
 
             scanf("%s%s", v1.name, v2.name);
             DeleteArc(g, v1, v2);
+            Display(g);
         }
 
         DestroyGraph(g);
