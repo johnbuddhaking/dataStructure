@@ -197,7 +197,7 @@ void CreateUDN(MGraph &G) {
         G.kind = UDN;
 }
 
-void CreateGraph(MGraph) {
+void CreateGraph(MGraph &G) {
     printf("请输入图G的类型（有向图0 有向网1 无向图2 无向网3）");
     scanf("%d", &G.kind);
     switch(G.kind) {
@@ -254,11 +254,11 @@ int FirstAdjVex(MGraph G, int v) {
 int NextAdjVex(MGraph G, int v, int w) {
     VRType j = 0;
     if (G.kind % 2) {  // 网
-        VRType = INFINITY;
+        j = INFINITY;
     }
 
     for (int i = w + 1; i < G.vexnum; ++i) {
-        if (G.arcs[v][i] != j) {
+        if (G.arcs[v][i].adj != j) {
             return i;
         }
     }
@@ -268,7 +268,7 @@ int NextAdjVex(MGraph G, int v, int w) {
 
 // 插入顶点
 void InsertVex(MGraph &G, VertexType v) {
-    VRtype j = 0;
+    VRType j = 0;
     if (G.kind % 2) {
         j = INFINITY;
     }
@@ -308,7 +308,7 @@ Status InsertArc(MGraph &G, VertexType v, VertexType w) {
     }
 
     if (G.kind > 1) {  // 无向
-        G.arcs[w1][v1] = G.arcs[v1][w1]
+        G.arcs[w1][v1] = G.arcs[v1][w1];
     }
 
     return OK;
@@ -388,14 +388,14 @@ Status DeleteVex(MGraph &G, VertexType v) {
 }
 
 void DestroyGraph(MGraph &G) {
-    for (int i = G.vexnum - 1; i >= 0; --) {
+    for (int i = G.vexnum - 1; i >= 0; --i) {
         DeleteVex(G, G.vexs[i]);
     }
 }
 
 void Display(MGraph G) {
-    char s[7] = "无向网";
-    char s1[3] = "边";
+    char s[12] = "无向网";
+    char s1[4] = "边";
 
     switch (G.kind) {
         case DG:
@@ -404,16 +404,17 @@ void Display(MGraph G) {
             break;
         case DN:
             strcpy(s, "有向网");
-            trcpy(s1, "弧");
+            strcpy(s1, "弧");
             break;
         case UDG:
             strcpy(s, "无向图");
         case UDN:
+            ;
     }
 
     // 先打印顶点
-    printf("%d个顶点 %d条 %s的 %s，顶点依次是：", G.vexnum, G.arcnum, s1, s)
-    for (int i = 0; i < G.vernum; ++i) {
+    printf("%d个顶点 %d条 %s的 %s，顶点依次是：", G.vexnum, G.arcnum, s1, s);
+    for (int i = 0; i < G.vexnum; ++i) {
         Visit(GetVex(G, i));
     }
 
@@ -455,3 +456,60 @@ void Display(MGraph G) {
         }
     }
 }
+
+void CreateFromFile(MGraph &G, char *filename, int IncInfo) {
+    FILE *f = fopen(filename, "r");
+
+    fscanf(f, "%d", &G.kind); // 由文件输入G的类型
+
+    VRType w = 0;  // 顶点关系类型 图
+    if (G.kind % 2) { // 网
+        w = INFINITY;
+    }
+
+    fscanf(f, "%d", &G.vexnum);  // 由文件输入G的顶点数
+    for (int i = 0; i < G.vexnum; ++i) {
+        InputFromFile(f, G.vexs[i]);  // 由文件输入顶点信息
+    }
+
+    fscanf(f, "%d", &G.arcnum);  // 由文件输入G的弧数
+    // 初始化二维邻接矩阵
+    for (int i = 0; i < G.vexnum; ++i) {
+        for (int j = 0; j < G.vexnum; ++j) {
+            G.arcs[i][j].adj = w;
+            G.arcs[i][j].info = NULL;
+        }
+    }
+
+    // 图
+    if (G.kind % 2 == 0) {
+        w = 1;
+    }
+
+    for (int k = 0; k < G.arcnum; ++k) {
+        VertexType v1;
+        VertexType v2;
+
+        fscanf(f, "%s%s", v1.name, v2.name);
+
+        if (G.kind % 2) {  // 网，再输入权值
+            fscanf(f, "%d", &w);
+        }
+
+        int t = LocateVex(G, v1);
+        int h = LocateVex(G, v2);
+        G.arcs[t][h].adj = w;
+
+        // 有边的相关信息
+        if (IncInfo) {
+            InputArcFromFile(f, G.arcs[t][h].info);
+        }
+
+        if (G.kind > 1) {
+            G.arcs[h][t] = G.arcs[t][h];
+        }
+    }
+
+    fclose(f);
+}
+

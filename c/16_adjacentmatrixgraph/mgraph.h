@@ -23,4 +23,4 @@ struct MGraph {
     AdjMatrix arcs;  // 邻接矩阵 -- 二维数组
     int vexnum, arcnum;  // 点数、边数
     GraphKind kind;  // 图的种类
-}
+};
