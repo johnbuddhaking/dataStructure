@@ -181,6 +181,14 @@ void HuffmanCoding_up_bottom(HuffmanTree &HT, HuffmanCode &HC, int *w, int n){
                 HC[c] = (char *)malloc((cdlen + 1)*sizeof(char));
                 cd[cdlen] = '\0';
                 strcpy(HC[c], cd);
+            }if (HT[c].lchild != 0) {  // 如果左孩子存在，则继续左访问
+                c = HT[c].lchild;
+                cd[cdlen++] = '0';
+            }
+            else if (HT[c].rchild == 0) {  // 如果左孩子不存在，且右孩子也不存在，则存编码
+                HC[c] = (char *)malloc((cdlen + 1)*sizeof(char));
+                cd[cdlen] = '\0';
+                strcpy(HC[c], cd);
             }
         }
         else if (HT[c].weight == 1) {  // 如果左孩子被访问，右孩子未被访问
