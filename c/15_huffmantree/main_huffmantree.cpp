@@ -33,7 +33,7 @@ void select(HuffmanTree t, int i, int &s1, int &s2){
     // 在哈夫曼树t的前i个结点中选择两个权值最小的树的根结点序号
     // s1为其中权值较小的序号
     s1 = min(t, i);
-    s2 = min(t, j);
+    s2 = min(t, i);
 
     #ifdef Order
         if (s1 > s2) {
@@ -57,7 +57,7 @@ void HuffmanCoding(HuffmanTree &HT, HuffmanCode &HC, int *w, int n){
     int m = 2 * n -1;
 
     // 0号单元未使用
-    HT = (HuffmanTree)malloc((m + 1)sizeof(HTNode));
+    HT = (HuffmanTree)malloc((m + 1) * sizeof(HTNode));
 
     HuffmanTree p = HT;
     // 从1号单元开始到n号单元，给叶子结点赋值
@@ -96,15 +96,19 @@ void HuffmanCoding(HuffmanTree &HT, HuffmanCode &HC, int *w, int n){
         int start = n - 1;  // 编码结束符位置
 
         // 从叶子到根逆向求编码
-        unsigned c;
-        unsigned f;
-        for (c = i, f = HT[i].parent; f != 0; c = f, f = HT[f].parent) {
+        unsigned c = i;
+        unsigned f = HT[i].parent;
+        while (f != 0) {
             if (HT[f].lchild == c) {
                 cd[--start] = '0';
-            else{
+            }
+            else {
                 cd[--start] = '1';
             }
+            c = f;
+            f = HT[f].parent;
         }
+
         HC[i] = (char *)malloc((n - start) * sizeof(char));
         strcpy(HC[i], &cd[start]);
     }
@@ -129,7 +133,7 @@ int main() {
     HuffmanCoding(HT, HC, w, n);
 
     for (int i = 1; i <= n; ++i) {
-        puts(HC[i]);  // 依次输出Huffman编码
+        puts(HC[i]);  // 依次输出Huffman编码，此方法系统自动在末尾添加换行符
     }
     return 0;
 }
