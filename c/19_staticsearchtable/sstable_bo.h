@@ -39,7 +39,7 @@ void Ascend(SSTable &ST) {
     }
 }
 
-void CreateOrdFromFile(SSTable &ST, char *filename) {
+void Create_OrdFromFile(SSTable &ST, char *filename) {
     Create_SeqFromFile(ST, filename);
     Ascend(ST);
 }
