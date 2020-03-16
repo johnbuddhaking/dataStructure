@@ -172,25 +172,25 @@ void HuffmanCoding_up_bottom(HuffmanTree &HT, HuffmanCode &HC, int *w, int n){
     // 未到叶子结点的孩子域
     while (c) {
         if (HT[c].weight == 0) {  // 左右孩子不曾被访问
-            HT[c].weight = 1; // 左访问，右未访问
-            if (HT[c].lchild != 0) {
+            HT[c].weight = 1; // 设置左访问
+            if (HT[c].lchild != 0) {  // 如果左孩子存在，则继续左访问
                 c = HT[c].lchild;
                 cd[cdlen++] = '0';
             }
-            else if (HT[c].rchild == 0) {
+            else if (HT[c].rchild == 0) {  // 如果左孩子不存在，且右孩子也不存在，则存编码
                 HC[c] = (char *)malloc((cdlen + 1)*sizeof(char));
                 cd[cdlen] = '\0';
                 strcpy(HC[c], cd);
             }
         }
-        else if (HT[c].weight == 1) {
-            HT[c].weight = 2;
+        else if (HT[c].weight == 1) {  // 如果左孩子被访问，右孩子未被访问
+            HT[c].weight = 2;  // 设置右访问
             if (HT[c].rchild != 0) {
                 c = HT[c].rchild;
                 cd[cdlen++] = '1';
             }
         }
-        else {
+        else {  // 如果左右均被访问，回退
             c = HT[c].parent;
             --cdlen;
         }
