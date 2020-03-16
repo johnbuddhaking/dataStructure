@@ -6,3 +6,7 @@
 SOSTree 
 static optimal search tree
 这里指静态次优查找树
+
+
+二分查找
+次优查找二叉树的构建
