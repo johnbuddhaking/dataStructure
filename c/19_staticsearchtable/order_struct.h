@@ -1,3 +1,6 @@
+#ifndef _ORDER_STRUCT_H
+#define _ORDER_STRUCT_H
+
 typedef int KeyType;
 
 struct ElemType {
@@ -15,3 +18,5 @@ void InputFromFile (FILE *f, ElemType &c) {
 void InputKey(KeyType &k) {
     scanf("%d", &k);
 }
+
+#endif

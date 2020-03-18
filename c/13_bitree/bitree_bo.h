@@ -1,3 +1,6 @@
+#ifndef _BITREE_BO_H
+#define _BITREE_BO_H
+
 #define ClearBiTree DestroyBiTree
 
 void InitBiTree(BiTree &T) {
@@ -360,3 +363,5 @@ void InOrderTraverse2(BiTree T, void (* visit)(TElemType)) {
     printf("\n");
     DestroyStack(s);
 }
+
+#endif

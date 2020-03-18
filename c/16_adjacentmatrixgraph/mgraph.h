@@ -1,3 +1,6 @@
+#ifndef _MGRAPH_H
+#define _MGRAPH_H
+
 #define INFINITY INT_MAX  // 用整型最大值代替 无穷
 typedef int VRType;  // 定义顶点关系类型为整型，与INFINITY的类型一致
 #define MAX_VERTEX_NUM 26  // 最大顶点个数
@@ -24,3 +27,5 @@ struct MGraph {
     int vexnum, arcnum;  // 点数、边数
     GraphKind kind;  // 图的种类
 };
+
+#endif

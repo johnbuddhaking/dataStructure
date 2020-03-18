@@ -1,3 +1,6 @@
+#ifdef _SSTABLE_BO_H
+#define _SSTABLE_BO_H
+
 #define EQ(a, b) ((a) == (b))
 #define LT(a, b) ((a) < (b))
 #define LQ(a, b) ((a) <= (b))
@@ -93,3 +96,5 @@ void Traverse(SSTable ST, void(*visit)(ElemType)) {
         visit(*(p + i));
     }
 }
+
+#endif

@@ -1,3 +1,6 @@
+#ifndef _SCORE_STRUCT_H
+#define _SCORE_STRUCT_H
+
 typedef long KeyType;
 #define key number
 
@@ -27,3 +30,5 @@ void InputFromFile(FILE *f, ElemType &c) {
 void InputKey(KeyType &k) {
     scanf("%ld", &k);
 }
+
+#endif

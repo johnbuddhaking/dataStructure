@@ -1,3 +1,6 @@
+#ifndef _MGRAPH_BO_H
+#define _MGRAPH_BO_H
+
 #include <iostream>
 
 // 访问顶点
@@ -518,3 +521,4 @@ void CreateFromFile(MGraph &G, char *filename, int IncInfo) {
     fclose(f);
 }
 
+#endif
