@@ -1,6 +1,6 @@
 #include "c1.h"
 #include "algraph.h"
-#include "algrpah_bo.h"
+#include "algraph_bo.h"
 
 
 typedef ALGraph Graph;

@@ -8,7 +8,7 @@ struct VertexType {
 };
 
 void visit(VertexType ver) {
-    printf("%s", ver.name);
+    printf("%s ", ver.name);
 }
 
 void Input(VertexType &ver) {
@@ -31,7 +31,7 @@ void InputArc(InfoType *&arc) {
 }
 
 void OutputArc(InfoType *arc) {
-    printf(":%d", arc->weight);
+    printf(":%d ", arc->weight);
 }
 
 void InputArcFromFile(FILE *f, InfoType *&arc) {
@@ -40,7 +40,7 @@ void InputArcFromFile(FILE *f, InfoType *&arc) {
 }
 
 // 定义图的邻接表存储结构
-#define MAX_VERTEX_NUM  // 最大顶点数
+#define MAX_VERTEX_NUM  20// 最大顶点数
 enum GraphKind{DG, DN, UDG, UDN};  // {有向图，有向网，无向图，无向网}
 
 struct ElemType {
@@ -48,12 +48,17 @@ struct ElemType {
     InfoType *info;
 };
 
+bool operator==(ElemType &t1,ElemType &t2)
+{
+   return t1.adjvex==t2.adjvex;
+}
+
 struct ArcNode {
     ElemType data;
     ArcNode *nextarc;
 };
 
-typdef struct {
+typedef struct {
     VertexType data;
     ArcNode *firstarc;
 }VNode, AdjList[MAX_VERTEX_NUM];
@@ -63,9 +68,10 @@ struct ALGraph {
     int vexnum;
     int arcnum;
     GraphKind kind;
-}
+};
 
 #define LNode ArcNode
 #define next nextarc
+#define LinkList ArcNode *
 
 #endif
